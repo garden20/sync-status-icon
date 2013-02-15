@@ -1,0 +1,42 @@
+<html>
+<head>
+    <script type="text/javascript" src="depends/svg.min.js"></script>
+    <script type="text/javascript" src="sync-status-icon.js"></script>
+</head>
+<body>
+
+    <div id="sync"></div>
+
+    <select id="nextState" onchange="displayNextState()">
+        <option>disabled</option>
+        <option>online</option>
+        <option>offline</option>
+        <option>syncing</option>
+
+    </select>
+
+    <script type="text/javascript">
+        var sync_icon = new SyncIcon('sync');
+        sync_icon.click(function(){
+            var state = sync_icon.getState();
+            var nextState = 'online';
+            if (state === 'disabled') sync_icon.online();
+            else {
+                sync_icon.disabled();
+                nextState = 'disabled'
+            }
+
+            document.getElementById("nextState").value = nextState;
+
+        })
+
+        function displayNextState() {
+            var nextState = document.getElementById("nextState").value;
+            sync_icon[nextState]();
+        }
+
+
+    </script>
+
+</body>
+</html>
