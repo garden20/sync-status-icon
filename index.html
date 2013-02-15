@@ -16,7 +16,9 @@
     </select>
 
     <script type="text/javascript">
-        var sync_icon = new SyncIcon('sync');
+        var sync_icon = new SyncIcon('sync', {
+            width: 25
+        });
         sync_icon.click(function(){
             var state = sync_icon.getState();
             var nextState = 'online';

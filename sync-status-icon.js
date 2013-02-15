@@ -11,24 +11,37 @@
 var icon = function(element, options) {
     var me = this;
 
-    if (!options) options = {
-        size: 295,
-        width: 294,
-        height: 256,
+    var defaults = {
+        size: 294,
         disabled_color: '#ccc',
         mouseover_color: '#eee',
         online_color: '#090',
+        sync_color: '#050',
         offline_color: '#900',
         state: 'disabled'
     };
+
+    if (!options) options = defaults;
+    if (!options.size) options.size = defaults.size;
+    if (!options.disabled_color) options.disabled_color = defaults.disabled_color;
+    if (!options.mouseover_color) options.mouseover_color = defaults.mouseover_color;
+    if (!options.online_color) options.online_color = defaults.online_color;
+    if (!options.offline_color) options.offline_color = defaults.offline_color;
+    if (!options.state) options.state = defaults.state;
+
 
     this.options = options;
     this.callback = false;
     this.animating = false;
 
-    this.paper = svg(element).size(options.width, options.width);
+    var orginal_height = 256;
+    var original_width = 294;
+
+    me.options.height =  ( orginal_height/original_width ) * me.options.size;
+
+    this.paper = svg(element).size(me.options.size, me.options.size);
     this.main_path = this.paper.path(main_icon);
-    this.main_path.size(this.options.width, this.options.height);
+    this.main_path.size(me.options.size  , me.options.height);
     this.main_path.attr({ fill: this.options.disabled_color });
 
 
@@ -63,16 +76,16 @@ var icon = function(element, options) {
     var syncing_state = function() {
         me.main_path.rotate(0);
         var gradient = me.paper.gradient('linear', function(stop) {
-          stop.at({ offset: 0, color: '#060', opacity: 1 });
-          stop.at({ offset: 100, color: '#090', opacity: 1 });
+          stop.at({ offset: 0, color: me.options.sync_color, opacity: 1 });
+          stop.at({ offset: 100, color: me.options.online_color, opacity: 1 });
         });
 
         var count = 0;
         me.sync_interval = setInterval(function(){
 
             gradient.update(function(stop) {
-              stop.at({ offset: count, color: '#090', opacity: 1 });
-              stop.at({ offset: 90, color: '#050', opacity: 1 });
+              stop.at({ offset: count, color: me.options.online_color, opacity: 1 });
+              stop.at({ offset: 100, color: me.options.sync_color, opacity: 1 });
               count+=10;
               if (count > 100) count = 0;
             });
