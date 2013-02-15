@@ -3,7 +3,7 @@ sync-status-icon
 
 The idea of this project is to create a visual metaphor for offline enabled webapps to communicate their state with the user.
 
-[demo](http://ryanramage.github.com/sync-status-icon)
+[demo](http://garden20.github.com/sync-status-icon)
 
 It revolves around the already published offline & storage icon produced by the w3, available here: http://www.w3.org/html/logo/.
 
